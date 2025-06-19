@@ -175,7 +175,7 @@ export const MonacoEditor: React.FC<MonacoEditorProps> = ({
       <Editor
         height="100%"
         language="rego"
-        // theme={settings.theme === 'dark' ? 'rego-dark' : 'rego-light'}
+        theme={settings.theme === 'dark' ? 'dark' : 'light'}
         value={value}
         onChange={handleEditorChange}
         onMount={handleEditorDidMount}
