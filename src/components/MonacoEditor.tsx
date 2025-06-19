@@ -105,64 +105,64 @@ export const MonacoEditor: React.FC<MonacoEditorProps> = ({
       monaco.languages.setLanguageConfiguration('rego', regoLanguageConfiguration);
     }
 
-    // Add custom theme
-    monaco.editor.defineTheme('rego-light', {
-      base: 'vs',
-      inherit: true,
-      rules: [
-        { token: 'keyword', foreground: '0000FF', fontStyle: 'bold' },
-        { token: 'keyword.builtin', foreground: '8B008B', fontStyle: 'bold' },
-        { token: 'string', foreground: '008000' },
-        { token: 'comment', foreground: '808080', fontStyle: 'italic' },
-        { token: 'number', foreground: 'FF6600' },
-        { token: 'operator', foreground: '000000', fontStyle: 'bold' },
-        { token: 'identifier', foreground: '000000' },
-      ],
-      colors: {
-        'editor.background': '#FFFFFF',
-        'editor.foreground': '#000000',
-        'editorLineNumber.foreground': '#999999',
-        'editor.selectionBackground': '#ADD6FF',
-        'editor.inactiveSelectionBackground': '#E5EBF1',
-      }
-    });
+    // // Add custom theme
+    // monaco.editor.defineTheme('rego-light', {
+    //   base: 'vs',
+    //   inherit: true,
+    //   rules: [
+    //     { token: 'keyword', foreground: '0000FF', fontStyle: 'bold' },
+    //     { token: 'keyword.builtin', foreground: '8B008B', fontStyle: 'bold' },
+    //     { token: 'string', foreground: '008000' },
+    //     { token: 'comment', foreground: '808080', fontStyle: 'italic' },
+    //     { token: 'number', foreground: 'FF6600' },
+    //     { token: 'operator', foreground: '000000', fontStyle: 'bold' },
+    //     { token: 'identifier', foreground: '000000' },
+    //   ],
+    //   colors: {
+    //     'editor.background': '#FFFFFF',
+    //     'editor.foreground': '#000000',
+    //     'editorLineNumber.foreground': '#999999',
+    //     'editor.selectionBackground': '#ADD6FF',
+    //     'editor.inactiveSelectionBackground': '#E5EBF1',
+    //   }
+    // });
 
-    monaco.editor.defineTheme('rego-dark', {
-      base: 'vs-dark',
-      inherit: true,
-      rules: [
-        { token: 'keyword', foreground: '569CD6', fontStyle: 'bold' },
-        { token: 'keyword.builtin', foreground: 'C586C0', fontStyle: 'bold' },
-        { token: 'string', foreground: 'CE9178' },
-        { token: 'comment', foreground: '6A9955', fontStyle: 'italic' },
-        { token: 'number', foreground: 'B5CEA8' },
-        { token: 'operator', foreground: 'D4D4D4', fontStyle: 'bold' },
-        { token: 'identifier', foreground: '9CDCFE' },
-      ],
-      colors: {
-        'editor.background': '#1E1E1E',
-        'editor.foreground': '#D4D4D4',
-        'editorLineNumber.foreground': '#858585',
-        'editor.selectionBackground': '#264F78',
-        'editor.inactiveSelectionBackground': '#3A3D41',
-      }
-    });
+    // monaco.editor.defineTheme('rego-dark', {
+    //   base: 'vs-dark',
+    //   inherit: true,
+    //   rules: [
+    //     { token: 'keyword', foreground: '569CD6', fontStyle: 'bold' },
+    //     { token: 'keyword.builtin', foreground: 'C586C0', fontStyle: 'bold' },
+    //     { token: 'string', foreground: 'CE9178' },
+    //     { token: 'comment', foreground: '6A9955', fontStyle: 'italic' },
+    //     { token: 'number', foreground: 'B5CEA8' },
+    //     { token: 'operator', foreground: 'D4D4D4', fontStyle: 'bold' },
+    //     { token: 'identifier', foreground: '9CDCFE' },
+    //   ],
+    //   colors: {
+    //     'editor.background': '#1E1E1E',
+    //     'editor.foreground': '#D4D4D4',
+    //     'editorLineNumber.foreground': '#858585',
+    //     'editor.selectionBackground': '#264F78',
+    //     'editor.inactiveSelectionBackground': '#3A3D41',
+    //   }
+    // });
 
-    // Set initial theme
-    monaco.editor.setTheme(settings.theme === 'dark' ? 'rego-dark' : 'rego-light');
+    // // Set initial theme
+    // monaco.editor.setTheme(settings.theme === 'dark' ? 'rego-dark' : 'rego-light');
 
     // Focus the editor
     editor.focus();
   };
 
-  useEffect(() => {
-    if (editorRef.current) {
-      const monaco = (window as any).monaco;
-      if (monaco) {
-        monaco.editor.setTheme(settings.theme === 'dark' ? 'rego-dark' : 'rego-light');
-      }
-    }
-  }, [settings.theme]);
+  // useEffect(() => {
+  //   if (editorRef.current) {
+  //     const monaco = (window as any).monaco;
+  //     if (monaco) {
+  //       monaco.editor.setTheme(settings.theme === 'dark' ? 'rego-dark' : 'rego-light');
+  //     }
+  //   }
+  // }, [settings.theme]);
 
   const handleEditorChange = (newValue: string | undefined) => {
     if (newValue !== undefined) {
@@ -175,7 +175,7 @@ export const MonacoEditor: React.FC<MonacoEditorProps> = ({
       <Editor
         height="100%"
         language="rego"
-        theme={settings.theme === 'dark' ? 'rego-dark' : 'rego-light'}
+        // theme={settings.theme === 'dark' ? 'rego-dark' : 'rego-light'}
         value={value}
         onChange={handleEditorChange}
         onMount={handleEditorDidMount}
