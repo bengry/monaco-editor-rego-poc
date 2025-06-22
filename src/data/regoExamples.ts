@@ -1,11 +1,11 @@
-import { RegoExample } from '../types/rego';
+import { RegoExample } from "../types/rego";
 
 export const regoExamples: RegoExample[] = [
   {
-    id: 'basic-allow',
-    title: 'Basic Allow Policy',
-    description: 'A simple policy that allows access based on user role',
-    category: 'Basic',
+    id: "basic-allow",
+    title: "Basic Allow Policy",
+    description: "A simple policy that allows access based on user role",
+    category: "Basic",
     code: `package authz
 
 import rego.v1
@@ -24,13 +24,13 @@ allow if {
 allow if {
     input.action == "read"
     input.resource.public == true
-}`
+}`,
   },
   {
-    id: 'rbac-policy',
-    title: 'Role-Based Access Control',
-    description: 'RBAC policy with role permissions mapping',
-    category: 'RBAC',
+    id: "rbac-policy",
+    title: "Role-Based Access Control",
+    description: "RBAC policy with role permissions mapping",
+    category: "RBAC",
     code: `package rbac
 
 import rego.v1
@@ -52,13 +52,13 @@ allow if {
 # Additional rule: admins can access everything
 allow if {
     input.user.role == "admin"
-}`
+}`,
   },
   {
-    id: 'kubernetes-admission',
-    title: 'Kubernetes Admission Controller',
-    description: 'Policy for validating Kubernetes resources',
-    category: 'Kubernetes',
+    id: "kubernetes-admission",
+    title: "Kubernetes Admission Controller",
+    description: "Policy for validating Kubernetes resources",
+    category: "Kubernetes",
     code: `package kubernetes.admission
 
 import rego.v1
@@ -86,13 +86,13 @@ deny contains msg if {
     missing := required_labels[_]
     not input.request.object.metadata.labels[missing]
     msg := sprintf("Missing required label: %s", [missing])
-}`
+}`,
   },
   {
-    id: 'data-filtering',
-    title: 'Data Filtering Policy',
-    description: 'Filter sensitive data based on user permissions',
-    category: 'Data Protection',
+    id: "data-filtering",
+    title: "Data Filtering Policy",
+    description: "Filter sensitive data based on user permissions",
+    category: "Data Protection",
     code: `package data.filter
 
 import rego.v1
@@ -121,13 +121,13 @@ field_requirements := {
 # Default allow for public fields
 field_requirements[field] := 1 if {
     not field_requirements[field]
-}`
+}`,
   },
   {
-    id: 'advanced-conditions',
-    title: 'Advanced Conditional Logic',
-    description: 'Complex policy with multiple conditions and functions',
-    category: 'Advanced',
+    id: "advanced-conditions",
+    title: "Advanced Conditional Logic",
+    description: "Complex policy with multiple conditions and functions",
+    category: "Advanced",
     code: `package advanced
 
 import rego.v1
@@ -173,6 +173,6 @@ user_suspended if {
     suspension := data.user_suspensions[input.user.id]
     suspension.active == true
     time.now_ns() < suspension.expires_at
-}`
-  }
+}`,
+  },
 ];

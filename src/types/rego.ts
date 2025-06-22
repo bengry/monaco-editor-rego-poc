@@ -7,7 +7,7 @@ export interface RegoExample {
 }
 
 export interface EditorSettings {
-  theme: 'light' | 'dark';
+  theme: "light" | "dark";
   fontSize: number;
   minimap: boolean;
   lineNumbers: boolean;
