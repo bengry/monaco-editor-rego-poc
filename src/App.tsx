@@ -153,13 +153,15 @@ function App() {
             />
           </div>
           
-          {/* Output Panel */}
+          <div className='hidden'>
+          Output Panel
           <div className="w-96">
             <OutputPanel
               output={output}
               isEvaluating={isEvaluating}
               hasError={hasError}
             />
+          </div>
           </div>
         </div>
       </div>
