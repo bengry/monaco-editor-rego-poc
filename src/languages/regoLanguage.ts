@@ -1,84 +1,103 @@
-
-import type monaco from 'monaco-editor'
+import type monaco from "monaco-editor";
 
 export const regoLanguageDefinition: monaco.languages.IMonarchLanguage = {
-    tokenizer: {
+  tokenizer: {
+    root: [
+      // Package declaration - transition to package state
+      [/\bpackage\b/, "keyword", "@package"],
 
-        root: [
-            // Keywords
-            [/\b(package|import|as|if|else|some|every|with|default|allow|deny|not|in|contains)\b/, 'keyword'],
+      // Control flow keywords
+      [/\b(if|else)\b/, "string.key"],
 
-            // Built-in functions
-            [/\b(count|sum|max|min|sort|all|any|sprintf|concat|startswith|endswith|substring|replace|split|trim|upper|lower|time|json|yaml|base64|hex|crypto|http|net|regex|glob|walk|type_name|to_number|is_number|is_string|is_boolean|is_array|is_object|is_null|is_set)\b/, 'keyword.builtin'],
+      // Policy decision keywords
+      [/\b(allow|deny)\b/, "type"],
 
+      // Other keywords
+      [/\b(import|as|some|every|with|default|not|in|contains)\b/, "keyword"],
 
-            // Keywords (TODO: see if we can/need color them differently?)
-            [/\b(data|input)\b/, 'keyword'],
+      // Built-in functions
+      [
+        /\b(count|sum|max|min|sort|all|any|sprintf|concat|startswith|endswith|substring|replace|split|trim|upper|lower|time|json|yaml|base64|hex|crypto|http|net|regex|glob|walk|type_name|to_number|is_number|is_string|is_boolean|is_array|is_object|is_null|is_set)\b/,
+        "keyword.builtin",
+      ],
 
-            // Operators
-            [/[=!<>]=?/, 'operator'],
-            [/[+\-*\/%]/, 'operator'],
-            [/[&|^~]/, 'operator'],
-            [/:=/, 'operator'],
+      // Built-in variables (data and input)
+      [/\b(data|input)\b/, "variable.language"],
 
-            // Numbers
-            [/\d+\.?\d*/, 'number'],
+      // Operators
+      [/[=!<>]=?/, "operator"],
+      [/[+\-*/%]/, "operator"],
+      [/[&|^~]/, "operator"],
+      [/:=/, "operator"],
 
-            // Strings
-            [/"([^"\\]|\\.)*$/, 'string.invalid'],
-            [/"/, 'string', '@string_double'],
-            [/'([^'\\]|\\.)*$/, 'string.invalid'],
-            [/'/, 'string', '@string_single'],
+      // Numbers
+      [/\d+\.?\d*/, "number"],
 
-            // Comments
-            [/#.*$/, 'comment'],
+      // Strings
+      [/"([^"\\]|\\.)*$/, "string.invalid"],
+      [/"/, "string", "@string_double"],
+      [/'([^'\\]|\\.)*$/, "string.invalid"],
+      [/'/, "string", "@string_single"],
 
-            // Brackets
-            [/[{}()\[\]]/, 'delimiter.bracket'],
-            [/[;,.]/, 'delimiter'],
+      // Comments
+      [/#.*$/, "comment"],
 
-            // Identifiers
-            [/[a-zA-Z_$][\w$]*/, 'identifier'],
+      // Brackets
+      [/[{}()[\]]/, "delimiter.bracket"],
+      [/[;,.]/, "delimiter"],
 
-            // Whitespace
-            [/\s+/, 'white'],
-        ],
+      // Identifiers
+      [/[a-zA-Z_$][\w$]*/, "identifier"],
 
-        string_double: [
-            [/[^\\"]+/, 'string'],
-            [/\\./, 'string.escape'],
-            [/"/, 'string', '@pop']
-        ],
+      // Whitespace
+      [/\s+/, "white"],
+    ],
 
-        string_single: [
-            [/[^\\']+/, 'string'],
-            [/\\./, 'string.escape'],
-            [/'/, 'string', '@pop']
-        ],
-    },
+    // Package name state - handles package name highlighting
+    package: [
+      // Skip whitespace
+      [/\s+/, "white"],
+      // Package name (can contain dots for nested packages)
+      [/[a-zA-Z_$][\w$]*(\.[a-zA-Z_$][\w$]*)*/, "type.identifier", "@pop"],
+      // If we encounter anything else, pop back to root
+      [/./, "", "@pop"],
+    ],
+
+    string_double: [
+      [/[^\\"]+/, "string"],
+      [/\\./, "string.escape"],
+      [/"/, "string", "@pop"],
+    ],
+
+    string_single: [
+      [/[^\\']+/, "string"],
+      [/\\./, "string.escape"],
+      [/'/, "string", "@pop"],
+    ],
+  },
 };
 
 export const regoLanguageConfiguration: monaco.languages.LanguageConfiguration = {
-    comments: {
-        lineComment: '#',
-    },
-    brackets: [
-        ['{', '}'],
-        ['[', ']'],
-        ['(', ')'],
-    ],
-    autoClosingPairs: [
-        { open: '{', close: '}' },
-        { open: '[', close: ']' },
-        { open: '(', close: ')' },
-        { open: '"', close: '"' },
-        { open: "'", close: "'" },
-    ],
-    surroundingPairs: [
-        { open: '{', close: '}' },
-        { open: '[', close: ']' },
-        { open: '(', close: ')' },
-        { open: '"', close: '"' },
-        { open: "'", close: "'" },
-    ],
+  comments: {
+    lineComment: "#",
+  },
+  brackets: [
+    ["{", "}"],
+    ["[", "]"],
+    ["(", ")"],
+  ],
+  autoClosingPairs: [
+    { open: "{", close: "}" },
+    { open: "[", close: "]" },
+    { open: "(", close: ")" },
+    { open: '"', close: '"' },
+    { open: "'", close: "'" },
+  ],
+  surroundingPairs: [
+    { open: "{", close: "}" },
+    { open: "[", close: "]" },
+    { open: "(", close: ")" },
+    { open: '"', close: '"' },
+    { open: "'", close: "'" },
+  ],
 };

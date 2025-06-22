@@ -6,6 +6,7 @@ import {
   regoLanguageConfiguration,
   regoLanguageDefinition,
 } from "../languages/regoLanguage";
+import { regoLightTheme, regoDarkTheme } from "../languages/regoThemes";
 
 interface MonacoEditorProps {
   value: string;
@@ -22,7 +23,7 @@ export const MonacoEditor: React.FC<MonacoEditorProps> = ({
 
   const handleEditorDidMount = (
     editor: monaco.editor.IStandaloneCodeEditor,
-    monaco: typeof import("monaco-editor"),
+    monaco: typeof import("monaco-editor")
   ) => {
     editorRef.current = editor;
 
@@ -32,9 +33,13 @@ export const MonacoEditor: React.FC<MonacoEditorProps> = ({
       monaco.languages.setMonarchTokensProvider("rego", regoLanguageDefinition);
       monaco.languages.setLanguageConfiguration(
         "rego",
-        regoLanguageConfiguration,
+        regoLanguageConfiguration
       );
     }
+
+    // Register custom Rego themes
+    monaco.editor.defineTheme("rego-light", regoLightTheme);
+    monaco.editor.defineTheme("rego-dark", regoDarkTheme);
 
     // Focus the editor
     editor.focus();
@@ -51,7 +56,7 @@ export const MonacoEditor: React.FC<MonacoEditorProps> = ({
       <Editor
         height="100%"
         language="rego"
-        theme={settings.theme === "dark" ? "vs-dark" : "vs-light"}
+        theme={settings.theme === "dark" ? "rego-dark" : "rego-light"}
         value={value}
         onChange={handleEditorChange}
         onMount={handleEditorDidMount}
